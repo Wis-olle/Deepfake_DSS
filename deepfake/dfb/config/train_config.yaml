@@ -1,0 +1,14 @@
+# Cấu hình chung cho mọi lần huấn luyện — học theo DeepfakeBench/training/config/train_config.yaml
+# (đường dẫn tương đối so với thư mục dfb/)
+mode: train
+rgb_dir: ../wdf              # dữ liệu WildDeepfake đã khớp độ sáng (get_wdf.py); ../wdf_v1 = tập cũ lệch nguồn
+out_dir: ../out/dfb
+label_dict:                  # họ liệt kê 20+ nhãn của 13 bộ; ta chỉ có hai
+  real: 0
+  fake: 1
+val_split: cluster           # cluster | random — DeepfakeBench KHÔNG có validation (chọn checkpoint trên test); ta có
+val_frac: 0.2
+test_dataset: [wdf, kaggle]  # wdf = tập test chính thức; kaggle = miền thứ hai (kiểm tra chéo bộ dữ liệu)
+kaggle_per_class: 800
+cost: {miss: 3.0, false_alarm: 1.0}   # ma trận chi phí quyết định: lọt một deepfake đắt gấp 3 lần gỡ nhầm video thật
+workers: 0                   # Windows: DataLoader không fork; ảnh đã nằm trong RAM nên 0 là đủ

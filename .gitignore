@@ -1,0 +1,26 @@
+# --- môi trường, tệp tạm ---
+venv/
+__pycache__/
+*.pyc
+node_modules/
+.claude/
+*.log
+
+# --- tài liệu, báo cáo, sổ tay, hình, bài giảng: KHÔNG đưa lên git ---
+bao-cao/
+nguon-tai-lieu/
+giao-trinh/
+tin-dung/
+
+# --- kết quả chạy, checkpoint ---
+deepfake/out/
+deepfake/out_v1/
+*.pth
+
+# --- dữ liệu lớn: tải lại bằng deepfake/get_wdf.py (kho ứng viên 2 GB, tập học, tập cũ) ---
+deepfake/wdf_pool/
+deepfake/wdf_v1/
+deepfake/wdf/
+# wdf_test/ (24 khung/video của 42 video test, 57 MB) cũng KHÔNG đưa lên vì kho công khai còn WildDeepfake
+# chỉ cấp cho nghiên cứu; ai cần thì sinh cục bộ bằng deepfake/export_test_subset.py
+deepfake/wdf_test/

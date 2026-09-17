@@ -1,0 +1,31 @@
+# SBI — theo khuôn config/detector/sbi.yaml của DeepfakeBench (họ: EfficientNet-B4, 50 epoch, GPU; ta: ResNet-18, CPU)
+model_name: sbi
+backbone_name: resnet18
+backbone_config:
+  pretrained: true
+pretrained: torchvision/ResNet18_Weights.IMAGENET1K_V1
+
+train_dataset: [wdf]
+dataset_type: blend               # → train.py dùng SBIDataset: chỉ ảnh THẬT, tự sinh ảnh giả
+train_batchSize: 32               # mỗi phần tử là một cặp → lô thực = 64 ảnh
+test_batchSize: 256
+frame_num: {train: 48, test: 24}  # chỉ có ảnh thật nên lấy nhiều khung hơn cho đa dạng
+resolution: 96
+
+use_data_augmentation: false      # như họ: mọi biến đổi nằm trong sbi_api.py
+data_aug: {flip_prob: 0.5, rotate_prob: 0.5, rotate_limit: [-10, 10], blur_prob: 0.5, blur_limit: [0.5, 1.5],
+           brightness_prob: 0.5, brightness_limit: [-0.1, 0.1], contrast_limit: [-0.1, 0.1], quality_lower: 40, quality_upper: 100}
+mean: [0.485, 0.456, 0.406]
+std: [0.229, 0.224, 0.225]
+
+optimizer:
+  type: adam
+  adam: {lr: 0.0001, beta1: 0.9, beta2: 0.999, eps: 0.00000001, weight_decay: 0.0001, amsgrad: false}
+  sgd: {lr: 0.0001, momentum: 0.9, weight_decay: 0.0001}
+lr_scheduler: null
+nEpochs: 12
+patience: 4
+manualSeed: 0
+loss_func: cross_entropy
+metric_scoring: video_auc         # validation = video thật + deepfake THẬT của WildDeepfake (chỉ để chọn epoch)
+cuda: auto

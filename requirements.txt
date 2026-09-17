@@ -1,0 +1,14 @@
+# Cài một lần vào venv Python 3.10 (64-bit):
+#   uv venv --python 3.10 venv && uv pip install --python venv\Scripts\python.exe -r requirements.txt
+# hoặc không có uv:
+#   py -3.10 -m venv venv && venv\Scripts\python.exe -m pip install -r requirements.txt
+# Trên Windows, bánh xe torch trên PyPI đã là bản CPU; không cần --index-url của PyTorch.
+torch
+torchvision
+pillow
+scikit-learn
+scipy
+matplotlib
+pyarrow
+huggingface_hub
+pyyaml

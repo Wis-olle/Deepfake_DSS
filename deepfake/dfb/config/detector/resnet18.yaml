@@ -1,0 +1,40 @@
+# ResNet-18 tiền huấn luyện ImageNet — theo khuôn config/detector/resnet34.yaml của DeepfakeBench
+model_name: resnet18
+backbone_name: resnet18
+backbone_config:
+  pretrained: true
+pretrained: torchvision/ResNet18_Weights.IMAGENET1K_V1
+
+train_dataset: [wdf]
+dataset_type: plain
+train_batchSize: 64
+test_batchSize: 256
+frame_num: {train: 24, test: 24}
+resolution: 96
+
+use_data_augmentation: true
+data_aug:
+  flip_prob: 0.5
+  rotate_prob: 0.5
+  rotate_limit: [-10, 10]
+  blur_prob: 0.5
+  blur_limit: [0.5, 1.5]
+  brightness_prob: 0.5
+  brightness_limit: [-0.1, 0.1]
+  contrast_limit: [-0.1, 0.1]
+  quality_lower: 40
+  quality_upper: 100
+mean: [0.485, 0.456, 0.406]
+std: [0.229, 0.224, 0.225]
+
+optimizer:
+  type: adam
+  adam: {lr: 0.0001, beta1: 0.9, beta2: 0.999, eps: 0.00000001, weight_decay: 0.0001, amsgrad: false}
+  sgd: {lr: 0.0001, momentum: 0.9, weight_decay: 0.0001}
+lr_scheduler: null
+nEpochs: 10
+patience: 3
+manualSeed: 0
+loss_func: cross_entropy
+metric_scoring: video_auc
+cuda: auto
